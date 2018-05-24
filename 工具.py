@@ -78,15 +78,30 @@ def test(a):
 
         flag = aa
 
-    print(reuslt)
     if len(reuslt) < 2:
         return 650
     else:
         return reuslt[1] - reuslt[0]
 
 
-if __name__ == '__main__':
-    lists = os.listdir('/Users/cc/cc/riki/train')
+def createData1(path='train/'):
+    xx = []
+    yy = []
+    lists = os.listdir(path)  # 列出目录的下所有文件和文件夹保存到lists
+    lists.sort()
     for i in lists:
-        l = yes_or_no('/Users/cc/cc/riki/train/' + i)
-        print(l)
+        im = Image.open(path + i)
+        box = (0, 40, 200, 70)
+        im = im.crop(box)
+        #im.show()
+        data = im.getdata()
+
+        # data = np.matrix(data, dtype='float') / 225  # 转换成矩阵
+        l = i.split("_");
+        yy.append(i.split("_")[len(l)-1])
+        xx.append(data)
+    return xx, yy
+
+
+if __name__ == '__main__':
+    createData1()
