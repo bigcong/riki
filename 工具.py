@@ -5,6 +5,7 @@ import os
 from PIL import Image
 
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 
 def iamge2imbw(img, inde=1):
@@ -89,19 +90,39 @@ def createData1(path='train/'):
     yy = []
     lists = os.listdir(path)  # 列出目录的下所有文件和文件夹保存到lists
     lists.sort()
+
     for i in lists:
         im = Image.open(path + i)
+        l = i.split("_");
+
         box = (0, 40, 200, 70)
         im = im.crop(box)
-        #im.show()
+        # im.show()
+
         data = im.getdata()
 
-        # data = np.matrix(data, dtype='float') / 225  # 转换成矩阵
-        l = i.split("_");
-        yy.append(i.split("_")[len(l)-1])
-        xx.append(data)
+        # data = np.matrix(data, dtype='float')   # 转换成矩阵
+        yy.append(l[0])
+        xx.append(np.array(data))
     return xx, yy
 
 
 if __name__ == '__main__':
-    createData1()
+    xx, yy = createData1()
+    pca = PCA(n_components=3)
+
+    colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
+    xx = pca.fit_transform(xx)
+
+    for index,i in enumerate(yy):
+
+        if i == 'no':
+            plt.scatter(xx[index][0], xx[index][1], c='yellow');
+        elif i=='yes':
+            plt.scatter(xx[index][0], xx[index][1], c='black');
+
+        else:
+            plt.scatter(xx[index][0], xx[index][1], c='blue');
+
+
+    plt.show()

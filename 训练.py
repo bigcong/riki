@@ -5,7 +5,7 @@ from PIL import ImageGrab
 from pymouse import *
 from pykeyboard import PyKeyboard
 
-from sklearn import preprocessing, neighbors
+from sklearn import preprocessing, neighbors, svm
 
 from 工具 import iamge2imbw, createData1
 
@@ -19,7 +19,8 @@ def train():
     X, y = createData1()
     scaler = preprocessing.StandardScaler().fit(X)
     scaler.transform(X)
-    knn = neighbors.KNeighborsClassifier(n_neighbors=5)
+    knn = neighbors.KNeighborsClassifier(n_neighbors=2,n_jobs=2)
+    # knn = svm.SVC()
 
     knn.fit(X, y)
     return knn, scaler
@@ -44,15 +45,16 @@ for i in range(50):
     test_data = [dm.getdata()];
     scaler.transform(test_data)
     p = knn.predict(test_data)
-    t = str(int(time.time() * 1000)) + '_' + str(int(time.time()) - begin);
+    t = str(int(time.time()) - begin) + '_' + str(int(time.time() * 1000))
     print(t)
     print(p)
 
-    if p[0] == 'yes.png':
+    if p[0] == 'yes':
         k.tap_key(k.space)
         last = 1
-        print('yes/' + t + ".png")
-        im.save('yes/' + t + "_yes.png")
-        time.sleep(0.3)
+        print('yes/yes_' + t + ".png")
+        #im.save('yes/yes_' + t + ".png")
+        #time.sleep(0.6)
     else:
-        im.save('data/' + t + "_no.png")
+        print("x")
+        #im.save('data/no_' + t + ".png")
