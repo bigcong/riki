@@ -19,8 +19,8 @@ def train():
     X, y = createData1()
     scaler = preprocessing.StandardScaler().fit(X)
     scaler.transform(X)
-    knn = neighbors.KNeighborsClassifier(n_neighbors=2,n_jobs=2)
-    # knn = svm.SVC()
+    #knn = neighbors.KNeighborsClassifier(n_neighbors=2,n_jobs=2)
+    knn = svm.SVC()
 
     knn.fit(X, y)
     return knn, scaler
@@ -34,7 +34,7 @@ k.tap_key(k.space)
 time.sleep(4)
 
 last = None
-for i in range(50):
+for i in range(5):
     im = ImageGrab.grab((800, 300, 2100, 600))
     w, h = im.size
     im.thumbnail((w // 4, h // 4))
@@ -42,6 +42,7 @@ for i in range(50):
     box = (0, 40, 200, 70)
 
     dm = im.crop(box)
+    dm.show()
     test_data = [dm.getdata()];
     scaler.transform(test_data)
     p = knn.predict(test_data)

@@ -104,25 +104,26 @@ def createData1(path='train/'):
         # data = np.matrix(data, dtype='float')   # 转换成矩阵
         yy.append(l[0])
         xx.append(np.array(data))
+    pca = PCA(n_components=2)
+
+
     return xx, yy
 
 
 if __name__ == '__main__':
     xx, yy = createData1()
-    pca = PCA(n_components=3)
+    pca = PCA(n_components=2)
 
     colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
     xx = pca.fit_transform(xx)
 
-    for index,i in enumerate(yy):
+    for index, i in enumerate(yy):
 
         if i == 'no':
             plt.scatter(xx[index][0], xx[index][1], c='yellow');
-        elif i=='yes':
+        elif i == 'yes':
             plt.scatter(xx[index][0], xx[index][1], c='black');
 
         else:
             plt.scatter(xx[index][0], xx[index][1], c='blue');
-
-
     plt.show()
