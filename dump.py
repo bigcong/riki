@@ -5,7 +5,7 @@ from io import BytesIO
 import requests
 from PIL import Image
 from sklearn.externals import joblib
-
+import sys
 
 def iamge2imbw(img, inde=1):
     """传入image对象进行灰度、二值处理"""
@@ -65,7 +65,7 @@ def spit2():
     return data, dms, codeUUID;
 
 
-def getimg(url='https://www.chaoex.io/12lian/user/getimg'):
+def getimg(url='http://59.110.157.9/polarisex/security/getCode'):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'}
     r = requests.post(url, headers=headers)
@@ -107,6 +107,15 @@ def train_real():
     #r = login('https://www.chaoex.io/12lian/user/loginGAFirst', codeUUID, vercode)
     #print(r)
 
+def pridicate(test_x):
+    knn, scaler = train();
+    scaler.transform(test_x)
+    vercode = ''.join(knn.predict(test_x))
+    print(vercode)
+
 
 if __name__ == '__main__':
     train_real();
+
+
+
