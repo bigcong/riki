@@ -76,7 +76,7 @@ if __name__ == '__main__':
                 is_end = True;  # 死循环结束
                 q_actal = r  # 不存在下一个了， 实际得到值只有r
 
-            q_table.loc[now, A] = 0.1 * (q_actal - q_pridict)  # 0.1 是学习效率，
+            q_table.loc[now, A] += 0.1 * (q_actal - q_pridict)  # 0.1 是学习效率，
             now = next;  # 当前位置改变
             step_counter = step_counter + 1
         print("\r花费步数:" + str(step_counter))
