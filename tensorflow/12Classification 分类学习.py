@@ -57,7 +57,7 @@ with  tf.Session() as sess:
     sess.run(init)
 
     right_counter = 0
-    for i in range(len(mnist.train.images)):
+    for i in range(100):
         batch_x, batch_y = mnist.train.next_batch(100)
 
         p = sess.run(train_setp, feed_dict={input_x: batch_x, input_y: batch_y})
@@ -69,6 +69,6 @@ with  tf.Session() as sess:
         right_counter = right_counter + np.sum(equals == True)
         print(right_counter / (100 * (i + 1)))
 
-        if i % 10000 == 0:
+        if i % 50 == 0:
             rs = sess.run(merged, feed_dict={input_x: batch_x, input_y: batch_y})
             writer.add_summary(rs, i)
