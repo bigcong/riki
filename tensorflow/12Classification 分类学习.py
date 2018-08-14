@@ -57,7 +57,7 @@ with  tf.Session() as sess:
     sess.run(init)
 
     right_counter = 0
-    for i in range(100):
+    for i in range(1000):
         batch_x, batch_y = mnist.train.next_batch(100)
 
         p = sess.run(train_setp, feed_dict={input_x: batch_x, input_y: batch_y})
